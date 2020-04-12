@@ -57,7 +57,7 @@ public:
 int main()
 {
 	Example demo;
-	if (demo.Construct(192, 108, 8, 8, false, true))
+	if (demo.Construct(192, 108, 10, 10, false, true))
 		demo.Start();
 
 	return 0;
