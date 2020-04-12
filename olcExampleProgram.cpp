@@ -13,7 +13,7 @@ public:
 	olc::Decal* decImage = nullptr;
 	float fAngle = 0.0f;
 
-	int nLayerBackground;
+	int nLayerBackground1, nLayerBackground2, nLayerBackground3;
 
 public:
 	bool OnUserCreate() override
@@ -23,16 +23,37 @@ public:
 		sprImage = new olc::Sprite("./Images/bell.png");
 		decImage = new olc::Decal(sprImage);
 
-		nLayerBackground = CreateLayer();
+		nLayerBackground1 = CreateLayer();
+		nLayerBackground2 = CreateLayer();
+		nLayerBackground3 = CreateLayer();
 
-		SetDrawTarget(nLayerBackground);
-		Clear(olc::VERY_DARK_BLUE);
+		SetDrawTarget(nLayerBackground1);
+		Clear(olc::BLANK);
+		for (auto i = 0; i < 15000; i++)
+		{
+			auto colour = rand() % 255;
+			Draw(rand() % ScreenWidth(), rand() % ScreenHeight(), olc::Pixel(colour, 0, 0, colour));
+		}
+		EnableLayer(nLayerBackground1, true);
+		
+		SetDrawTarget(nLayerBackground2);
+		Clear(olc::BLANK);
+		for (auto i = 0; i < 15000; i++)
+		{
+			auto colour = rand() % 255;
+			Draw(rand() % ScreenWidth(), rand() % ScreenHeight(), olc::Pixel(0, colour, 0, colour));
+		}
+		EnableLayer(nLayerBackground2, true);
 
-		for (auto x = 0; x < ScreenWidth(); x++)
-			for (auto y = 0; y < ScreenHeight(); y++)
-				Draw(x, y, olc::Pixel(rand() % 255, rand() % 255, 0));
+		SetDrawTarget(nLayerBackground3);
+		Clear(olc::BLANK);
+		for (auto i = 0; i < 15000; i++)
+		{
+			auto colour = rand() % 255;
+			Draw(rand() % ScreenWidth(), rand() % ScreenHeight(), olc::Pixel(0, 0, colour, colour));
+		}
+		EnableLayer(nLayerBackground3, true);
 
-		EnableLayer(nLayerBackground, true);
 		SetDrawTarget(nullptr);
 		Clear(olc::BLANK);
 
@@ -41,10 +62,9 @@ public:
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
-		auto colour = rand() % 255;
-		Draw(rand() % ScreenWidth(), rand() % ScreenHeight(), olc::Pixel(0, 0, colour, colour));
-
-		SetLayerOffset(nLayerBackground, { fAngle * 0.1f, fAngle * 0.1f });
+		SetLayerOffset(nLayerBackground1, { fAngle * 0.4f, fAngle * 0.4f });
+		SetLayerOffset(nLayerBackground2, { fAngle * 0.2f, fAngle * 0.2f });
+		SetLayerOffset(nLayerBackground3, { fAngle * 0.1f, fAngle * 0.1f });
 
 		fAngle += fElapsedTime * 0.1f;
 		DrawRotatedDecal({ float(GetMouseX()), float(GetMouseY())}, decImage, fAngle, {sprImage->width / 2.0f, sprImage->height / 2.0f}, { 0.1f, 0.1f });
@@ -57,7 +77,7 @@ public:
 int main()
 {
 	Example demo;
-	if (demo.Construct(192, 108, 10, 10, false, true))
+	if (demo.Construct(192, 108, 10, 10, false, false))
 		demo.Start();
 
 	return 0;
