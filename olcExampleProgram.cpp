@@ -68,6 +68,7 @@ public:
 
 		fAngle += fElapsedTime * 0.1f;
 		DrawRotatedDecal({ float(GetMouseX()), float(GetMouseY())}, decImage, fAngle, {sprImage->width / 2.0f, sprImage->height / 2.0f}, { 0.1f, 0.1f });
+		DrawRotatedDecal({ float(GetMouseX()), float(GetMouseY())}, decImage, -fAngle, {sprImage->width / 2.0f, sprImage->height / 2.0f}, { 0.1f, 0.1f });
 
 		return true;
 	}
