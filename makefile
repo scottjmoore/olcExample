@@ -4,3 +4,8 @@ CLIBS=-lX11 -lGL -lpthread -lpng -lstdc++fs -levdev
 
 Example: olcExampleProgram.cpp
 	$(CC) -o Example olcExampleProgram.cpp $(CLIBS) $(CFLAGS)
+
+clean:
+	@echo Making clean...
+	@rm Example
+	@echo Done...
