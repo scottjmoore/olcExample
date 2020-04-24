@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <fcntl.h>
-#include <libevdev-1.0/libevdev/libevdev.h>
+// #include <libevdev-1.0/libevdev/libevdev.h>
 
 class Example : public olc::PixelGameEngine
 {
@@ -19,7 +19,7 @@ public:
 
 	int nLayerBackground1, nLayerBackground2, nLayerBackground3;
 
-	struct libevdev *dev = NULL;
+	// struct libevdev *dev = NULL;
 	int fd;
 	int rc = 1;
 
@@ -65,7 +65,7 @@ public:
 		SetDrawTarget(nullptr);
 		Clear(olc::BLANK);
 
-		fd = open("/dev/input/event8", O_RDONLY | O_NONBLOCK);
+		/*fd = open("/dev/input/event8", O_RDONLY | O_NONBLOCK);
 		rc = libevdev_new_from_fd(fd, &dev);
 
 		if (rc < 0) {
@@ -78,20 +78,20 @@ public:
 		
 		libevdev_get_id_bustype(dev),
 		libevdev_get_id_vendor(dev),
-		libevdev_get_id_product(dev));
+		libevdev_get_id_product(dev));*/
 
 		return true;
 	}
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
-		struct input_event ev;
-        rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_NORMAL, &ev);
-        if (rc == 0)
-                printf("Event: %s %s %d\n",
-                       libevdev_event_type_get_name(ev.type),
-                       libevdev_event_code_get_name(ev.type, ev.code),
-                       ev.value);
+		// struct input_event ev;
+        // rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_NORMAL, &ev);
+        // if (rc == 0)
+        //        printf("Event: %s %s %d\n",
+        //               libevdev_event_type_get_name(ev.type),
+        //               libevdev_event_code_get_name(ev.type, ev.code),
+        //               ev.value);
 
 		SetLayerOffset(nLayerBackground1, { fAngle * 0.4f, fAngle * 0.4f });
 		SetDrawTarget(nLayerBackground1);
